@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react';
 import React, { ComponentProps } from 'react';
-import { Slide } from '../src';
+import { Navbar, Slide } from '../src';
 
 
 
@@ -11,7 +11,8 @@ export default {
   argTypes: {
     backgroundColor: {
         control: {
-            type: 'color'
+            type: 'color',
+            presetColors:['transparent', 'black', 'blue', 'green']
         }
     }
   },
@@ -20,8 +21,8 @@ export default {
 //👇 We create a “template” of how args map to rendering
 const Template: Story<ComponentProps<typeof Slide>> = (args) => <Slide {...args} />;
 
-export const FirstStory = Template.bind({});
-FirstStory.args = {
+export const DefaultSlide = Template.bind({});
+DefaultSlide.args = {
   /*👇 The args you need here will depend on your component */
-  header: (<h1>Hi</h1>)
+  header: (<Navbar/>)
 };

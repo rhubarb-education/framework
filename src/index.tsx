@@ -1,6 +1,10 @@
 import React, { FC, HTMLAttributes, ReactChild } from 'react';
+import './styles/toolkit.scss';
+
+
 export { Module } from './components/core/Module';
 export { Slide } from './components/core/Slide';
+export { Navbar } from './components/core/template/Navbar';
 
 export interface Props extends HTMLAttributes<HTMLDivElement> {
   /** custom content, defaults to 'the snozzberries taste like snozzberries' */
