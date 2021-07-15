@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import SlideContent from './slide/SlideContent';
 import SlideFooter from './slide/SlideFooter';
 import SlideHeader from './slide/SlideHeader';
+import Navbar from './template/Navbar';
 
 
 export interface ISlide<DataType = {}> {
@@ -17,7 +18,7 @@ export interface ISlide<DataType = {}> {
 }
 
 interface SlideProps {
-    header: JSX.Element | null;
+    header?: JSX.Element | null;
     footer?: JSX.Element | null;
     backgroundColor?: string;
     animDisabled?: boolean;
@@ -28,7 +29,7 @@ interface SlideProps {
 }
 
 export const Slide: React.FC<SlideProps> = ({
-    header,
+    header = (<Navbar/>),
     children,
     footer,
     backgroundColor = 'transparent',

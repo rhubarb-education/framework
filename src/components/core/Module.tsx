@@ -11,7 +11,7 @@ export interface IModule {
 
 interface ModuleProps {
     name: string;
-    slides: any;
+    slides: any[];
     index?: number;
     onComplete(name: any): void;
     defaultHeader: JSX.Element;

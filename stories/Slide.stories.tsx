@@ -14,6 +14,9 @@ export default {
             type: 'color',
             presetColors:['transparent', 'black', 'blue', 'green']
         }
+    },
+    nextSlide: {
+        action: 'next slide!'
     }
   },
   parameters: {
