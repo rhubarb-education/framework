@@ -20,7 +20,7 @@ interface ModuleProps {
     Wrapper?: React.FC;
 }
 
-const Module: React.FC<ModuleProps> = ({
+export const Module: React.FC<ModuleProps> = ({
     name,
     slides,
     index = 0,
@@ -139,5 +139,3 @@ const Module: React.FC<ModuleProps> = ({
         <p>Error! No slides provided.</p>
     );
 };
-
-export default Module;
