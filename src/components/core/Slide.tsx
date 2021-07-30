@@ -26,9 +26,10 @@ interface SlideProps {
     headerHidden?: boolean
     overflow?: boolean;
     headerTransparent?: boolean;
+    children: React.ReactNode
 }
 
-export const Slide: React.FC<SlideProps> = ({
+export const Slide = ({
     header = (<Navbar/>),
     children,
     footer,
@@ -38,7 +39,7 @@ export const Slide: React.FC<SlideProps> = ({
     headerHidden = false,
     overflow = true,
     headerTransparent = false,
-}) => {
+}: SlideProps) => {
     return (
         <AnimatePresence>
             <StyledSlide className="content-wrapper" backgroundColor={backgroundColor} oflow={overflow}>

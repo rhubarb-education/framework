@@ -20,7 +20,7 @@ interface ModuleProps {
     Wrapper?: React.FC;
 }
 
-export const Module: React.FC<ModuleProps> = ({
+export const Module = ({
     name,
     slides,
     index = 0,
@@ -29,7 +29,7 @@ export const Module: React.FC<ModuleProps> = ({
     data,
     devIndex = 0,
     Wrapper = DefaultWrapper,
-}) => {
+}: ModuleProps) => {
     if (process.env.NODE_ENV === 'development') {
         console.log('Development mode enabled!');
 
