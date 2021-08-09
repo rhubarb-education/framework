@@ -1,7 +1,6 @@
 import React, { FC, HTMLAttributes, ReactChild } from 'react';
 import './styles/toolkit.scss';
 
-
 export { IModule, Module } from './components/core/Module';
 export { ISlide, Slide } from './components/core/Slide';
 export { Navbar } from './components/core/template/Navbar';
