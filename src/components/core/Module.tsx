@@ -1,7 +1,6 @@
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
-import { actions, sendAnalytics } from '../../services/analytics';
 // import VoiceoverContext from '../misc/voiceover-context';
 import DefaultWrapper from './Wrapper';
 
@@ -13,7 +12,9 @@ interface ModuleProps {
     name: string;
     slides: any[];
     index?: number;
-    onComplete(name: any): void;
+    onComplete: (name: any) => void;
+    onNextSlide: (slideIndex: number) => void;
+    onFinalSlide: () => void;
     defaultHeader: JSX.Element;
     data: object;
     devIndex?: number;
@@ -25,6 +26,8 @@ export const Module = ({
     slides,
     index = 0,
     onComplete,
+    onNextSlide,
+    onFinalSlide,
     defaultHeader,
     data,
     devIndex = 0,
@@ -68,10 +71,7 @@ export const Module = ({
         }
 
         if (index === slides.length - 1) {
-            sendAnalytics(name, {
-                slide: index,
-                type: actions.finalSlide,
-            });
+            onFinalSlide();
         }
 
         const CurrentSlide = slides[index];
@@ -91,10 +91,7 @@ export const Module = ({
     };
 
     const nextSlide = () => {
-        sendAnalytics(name, {
-            slide: slideIndex + 1,
-            type: actions.nextSlide,
-        });
+        onNextSlide(slideIndex + 1)
         setSlideIndex(slideIndex + 1);
     };
 
