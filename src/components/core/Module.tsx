@@ -34,7 +34,7 @@ export const Module = ({
     Wrapper = DefaultWrapper,
 }: ModuleProps) => {
     if (process.env.NODE_ENV === 'development') {
-        console.log('Development mode enabled!');
+        console.debug('Development mode enabled!');
 
         // check if dev cookie
         let cookieData: any = Cookies.get(`bfg_dev`);
@@ -112,10 +112,10 @@ export const Module = ({
                     handleFocusableElements={true}
                     onKeyEvent={(key: any) => {
                         if (key === 'left') {
-                            console.log(slideIndex);
+                            console.debug(slideIndex);
                             previousSlide();
                         } else if (key === 'right') {
-                            console.log(slideIndex);
+                            console.debug(slideIndex);
                             nextSlide();
                         }
                     }}
