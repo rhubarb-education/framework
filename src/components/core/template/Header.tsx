@@ -3,12 +3,12 @@ import { Col, Container, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 // import LangButton from '../../misc/LangButton';
 
-type SlideHeaderProps = {
+type HeaderProps = {
     header: JSX.Element | null,
     headerTransparent?: boolean;
 }
 
-const SlideHeader: React.FC<SlideHeaderProps> = ({ header, headerTransparent }) => {
+const Header: React.FC<HeaderProps> = ({ header, headerTransparent }) => {
     const sectionClasses = headerTransparent ? 'section--header' : 'section--header bg-secondary-700';
 
     return (
@@ -24,7 +24,7 @@ const SlideHeader: React.FC<SlideHeaderProps> = ({ header, headerTransparent }) 
     )
 };
 
-export default SlideHeader;
+export default Header;
 
 
 const HeaderWrapper = styled.section`

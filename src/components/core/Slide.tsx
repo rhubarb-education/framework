@@ -1,9 +1,9 @@
 import { AnimatePresence } from 'framer-motion';
 import React from 'react';
 import styled from 'styled-components';
-import SlideContent from './slide/SlideContent';
-import SlideFooter from './slide/SlideFooter';
-import SlideHeader from './slide/SlideHeader';
+import Content from './template/Content';
+import Footer from './template/Footer';
+import Header from './template/Header';
 import Navbar from './template/Navbar';
 
 
@@ -43,9 +43,9 @@ export const Slide = ({
     return (
         <AnimatePresence>
             <StyledSlide className="content-wrapper" backgroundColor={backgroundColor} oflow={overflow}>
-                {!headerHidden ? <SlideHeader header={header} headerTransparent={headerTransparent} /> : null}
-                <SlideContent animDisabled={animDisabled}>{children}</SlideContent>
-                {!footerHidden ? <SlideFooter footer={footer} /> : null}
+                {!headerHidden ? <Header header={header} headerTransparent={headerTransparent} /> : null}
+                <Content animDisabled={animDisabled}>{children}</Content>
+                {!footerHidden ? <Footer footer={footer} /> : null}
             </StyledSlide>
         </AnimatePresence>
     );

@@ -1,13 +1,13 @@
-import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
 import { motion, Variants } from 'framer-motion';
+import React from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 
 const variants: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
 };
 
-const SlideContent: React.FC<{ animDisabled: boolean }> = ({ children, animDisabled = false }) => (
+const Content: React.FC<{ animDisabled: boolean }> = ({ children, animDisabled = false }) => (
     <motion.section
         className="section--main"
         initial="hidden"
@@ -22,4 +22,4 @@ const SlideContent: React.FC<{ animDisabled: boolean }> = ({ children, animDisab
     </motion.section>
 );
 
-export default SlideContent;
+export default Content;

@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 // import VoiceoverContext from '../misc/voiceover-context';
-import DefaultWrapper from './Wrapper';
+import DefaultWrapper from './template/Wrapper';
 
 export interface IModule {
     onComplete: (name: string) => void;

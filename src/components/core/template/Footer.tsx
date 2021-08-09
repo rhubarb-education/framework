@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 
-const SlideHeader: React.FC<{ footer: JSX.Element | null | undefined }> = ({ footer }) => (
+const Footer: React.FC<{ footer: JSX.Element | null | undefined }> = ({ footer }) => (
     <section className="section--footer">
         <div className="section--footer__content">
             <Container>{footer}</Container>
@@ -9,4 +9,4 @@ const SlideHeader: React.FC<{ footer: JSX.Element | null | undefined }> = ({ foo
     </section>
 );
 
-export default SlideHeader;
+export default Footer;
