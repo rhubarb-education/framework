@@ -13,8 +13,8 @@ interface ModuleProps {
     slides: any[];
     index?: number;
     onComplete: (name: any) => void;
-    onNextSlide: (slideIndex: number) => void;
-    onFinalSlide: () => void;
+    onNextSlide?: (slideIndex: number) => void;
+    onFinalSlide?: () => void;
     defaultHeader: JSX.Element;
     data: object;
     devIndex?: number;
@@ -26,8 +26,8 @@ export const Module = ({
     slides,
     index = 0,
     onComplete,
-    onNextSlide,
-    onFinalSlide,
+    onNextSlide = () => {},
+    onFinalSlide = () => {},
     defaultHeader,
     data,
     devIndex = 0,
