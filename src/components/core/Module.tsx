@@ -16,6 +16,7 @@ interface ModuleProps {
     onNextSlide?: (slideIndex: number) => void;
     onFinalSlide?: () => void;
     defaultHeader: JSX.Element;
+    defaultFooter: JSX.Element;
     data: object;
     devIndex?: number;
     Wrapper?: React.FC;
@@ -26,9 +27,10 @@ export const Module = ({
     slides,
     index = 0,
     onComplete,
-    onNextSlide = () => {},
-    onFinalSlide = () => {},
+    onNextSlide = () => { },
+    onFinalSlide = () => { },
     defaultHeader,
+    defaultFooter,
     data,
     devIndex = 0,
     Wrapper = DefaultWrapper,
@@ -83,6 +85,7 @@ export const Module = ({
                     gotoSlide={(i: number) => gotoSlide(i)}
                     onComplete={() => onComplete(name)}
                     defaultHeader={defaultHeader}
+                    defaultFooter={defaultFooter}
                     data={data}
                     currentIndex={index}
                 />

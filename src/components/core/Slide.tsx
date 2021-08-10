@@ -13,6 +13,7 @@ export interface ISlide<DataType = {}> {
     gotoSlide: (index: number) => void;
     onComplete(): void;
     defaultHeader: JSX.Element;
+    defaultFooter: JSX.Element;
     data: DataType;
     currentIndex: number;
 }
@@ -22,15 +23,17 @@ interface SlideProps {
     footer?: JSX.Element | null;
     backgroundColor?: string;
     animDisabled?: boolean;
-    footerHidden?: boolean;
-    headerHidden?: boolean
     overflow?: boolean;
-    headerTransparent?: boolean;
-    children: React.ReactNode
+    children: React.ReactNode;
+    headerHidden?: boolean
+    headerBasicBG?: string;
+    footerHidden?: boolean;
+    footerFixed?: boolean;
+    footerBasicBG?: string;
 }
 
 export const Slide = ({
-    header = (<Navbar/>),
+    header = (<Navbar />),
     children,
     footer,
     backgroundColor = 'transparent',
@@ -38,14 +41,16 @@ export const Slide = ({
     footerHidden = false,
     headerHidden = false,
     overflow = true,
-    headerTransparent = false,
+    footerFixed = true,
+    footerBasicBG,
+    headerBasicBG
 }: SlideProps) => {
     return (
         <AnimatePresence>
-            <StyledSlide className="content-wrapper" backgroundColor={backgroundColor} oflow={overflow}>
-                {!headerHidden ? <Header header={header} headerTransparent={headerTransparent} /> : null}
-                <Content animDisabled={animDisabled}>{children}</Content>
-                {!footerHidden ? <Footer footer={footer} /> : null}
+            <StyledSlide backgroundColor={backgroundColor} oflow={overflow}>
+                {!headerHidden ? <Header headerBasicBG={headerBasicBG} header={header} /> : null}
+                <Content bottomPadding={footerFixed} backgroundColor={backgroundColor} oflow={overflow} animDisabled={animDisabled}>{children}</Content>
+                {!footerHidden ? <Footer footerBasicBG={footerBasicBG} footer={footer} footerFixed={footerFixed} /> : null}
             </StyledSlide>
         </AnimatePresence>
     );
@@ -56,14 +61,10 @@ interface StyledSlideProps {
     oflow: boolean;
 }
 const StyledSlide = styled.div<StyledSlideProps>`
-    .section--main {
-        background-color: ${(props: StyledSlideProps) => props.backgroundColor};
-        overflow: ${(props: StyledSlideProps) => (props.oflow ? 'visible' : 'hidden')};
-    }
-
-    .section--footer {
-        background-color: ${(props: StyledSlideProps) => props.backgroundColor};
-    }
+    /* Take up 100% of screen */
+    height: 100%;
+    display: flex;
+    flex-flow: column;
 `;
 
 export default Slide;
