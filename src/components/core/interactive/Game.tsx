@@ -20,7 +20,7 @@ export function useGameLogic<T>(
 ): [T, () => void] {
     const [questions] = useState(gameData);
     const [questionIndex, setQuestionIndex] = useState(index);
-    const [question, setQuestion] = useState<any>(null);
+    const [question, setQuestion] = useState(gameData[index]);
 
     useEffect(() => {
         setQuestion(gameData[questionIndex]);
