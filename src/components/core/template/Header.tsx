@@ -37,8 +37,11 @@ export default Header;
 const StyledHeader = styled.section<{ background?: string }>`
     ${(props) => props.background ?
         `background-color: ${props.background};
-        min-height: 75px;
-        padding: 10px 0;`
+        min-height: 50px;
+        padding: 10px 0;
+        @media (min-height: 700px) {
+            min-height: 75px;
+        }`
         : null}
     position: relative;
     z-index: 3;
