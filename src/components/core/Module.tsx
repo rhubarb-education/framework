@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 // import VoiceoverContext from '../misc/voiceover-context';
@@ -20,6 +19,7 @@ interface ModuleProps {
     data: object;
     devIndex?: number;
     Wrapper?: React.FC;
+    dataStoreName?: string;
 }
 
 export const Module = ({
@@ -34,6 +34,7 @@ export const Module = ({
     data,
     devIndex = 0,
     Wrapper = DefaultWrapper,
+    dataStoreName = 'rbe'
 }: ModuleProps) => {
     const [slideIndex, setSlideIndex] = useState(index);
 
@@ -45,7 +46,7 @@ export const Module = ({
         console.debug('Development mode enabled!');
 
         
-        let cookieData: any = Cookies.get(`rbe_dev`);
+        let cookieData: any = localStorage.getItem(`${dataStoreName}`);
         if (cookieData) {
             cookieData = JSON.parse(cookieData);
         }
@@ -57,16 +58,16 @@ export const Module = ({
         }
 
         setSlideIndex(index);
-    }, []);
+    }, [setSlideIndex]);
 
     useEffect(() => {
         if (process.env.NODE_ENV !== 'development') {
             return;
         }
         
-        Cookies.set(`rbe_dev`, {
+        localStorage.setItem(`${dataStoreName}`, JSON.stringify({
             [name]: slideIndex,
-        });
+        }));
         
     }, [slideIndex, name]);
 
