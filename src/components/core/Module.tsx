@@ -35,10 +35,16 @@ export const Module = ({
     devIndex = 0,
     Wrapper = DefaultWrapper,
 }: ModuleProps) => {
-    if (process.env.NODE_ENV === 'development') {
+    const [slideIndex, setSlideIndex] = useState(index);
+
+    useEffect(() => {
+        if (process.env.NODE_ENV !== 'development') {
+            return;
+        }
+        
         console.debug('Development mode enabled!');
 
-        // check if dev cookie
+        
         let cookieData: any = Cookies.get(`rbe_dev`);
         if (cookieData) {
             cookieData = JSON.parse(cookieData);
@@ -49,49 +55,20 @@ export const Module = ({
         } else {
             index = devIndex;
         }
-    }
-    const [slideIndex, setSlideIndex] = useState(index);
 
-    // const { voiceover } = useContext(VoiceoverContext);
+        setSlideIndex(index);
+    }, []);
 
-    // useEffect(() => {
-    //     voiceover?.stop();
-    // }, [slideIndex]);
-
-    // also handle slide pos saving...
     useEffect(() => {
-        if (process.env.NODE_ENV === 'development') {
-            Cookies.set(`bfg_dev`, {
-                [name]: slideIndex,
-            });
+        if (process.env.NODE_ENV !== 'development') {
+            return;
         }
+        
+        Cookies.set(`rbe_dev`, {
+            [name]: slideIndex,
+        });
+        
     }, [slideIndex, name]);
-
-    const renderSlide = (index: number): JSX.Element => {
-        if (typeof slides[index] === 'undefined') {
-            return <p onKeyDown={() => console.log('go')}>Error rendering slide (404)</p>;
-        }
-
-        if (index === slides.length - 1) {
-            onFinalSlide();
-        }
-
-        const CurrentSlide = slides[index];
-        return (
-            <Wrapper>
-                <CurrentSlide
-                    nextSlide={nextSlide}
-                    previousSlide={previousSlide}
-                    gotoSlide={(i: number) => gotoSlide(i)}
-                    onComplete={() => onComplete(name)}
-                    defaultHeader={defaultHeader}
-                    defaultFooter={defaultFooter}
-                    data={data}
-                    currentIndex={index}
-                />
-            </Wrapper>
-        );
-    };
 
     const nextSlide = () => {
         onNextSlide(slideIndex + 1);
@@ -125,6 +102,32 @@ export const Module = ({
             );
         }
         return null;
+    };
+
+    const renderSlide = (index: number): JSX.Element => {
+        if (typeof slides[index] === 'undefined') {
+            return <p onKeyDown={() => console.log('go')}>Error rendering slide (404)</p>;
+        }
+
+        if (index === slides.length - 1) {
+            onFinalSlide();
+        }
+
+        const CurrentSlide = slides[index];
+        return (
+            <Wrapper>
+                <CurrentSlide
+                    nextSlide={nextSlide}
+                    previousSlide={previousSlide}
+                    gotoSlide={(i: number) => gotoSlide(i)}
+                    onComplete={() => onComplete(name)}
+                    defaultHeader={defaultHeader}
+                    defaultFooter={defaultFooter}
+                    data={data}
+                    currentIndex={index}
+                />
+            </Wrapper>
+        );
     };
 
     return slides ? (
