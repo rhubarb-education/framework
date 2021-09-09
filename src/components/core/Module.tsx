@@ -48,7 +48,7 @@ export const Module = ({
         
         let cookieData: any = localStorage.getItem(`${dataStoreName}`);
         if (cookieData) {
-            cookieData = JSON.parse(cookieData);
+            cookieData = JSON.parse(atob(cookieData));
         }
 
         if (cookieData && cookieData[name]) {
@@ -65,9 +65,9 @@ export const Module = ({
             return;
         }
         
-        localStorage.setItem(`${dataStoreName}`, JSON.stringify({
+        localStorage.setItem(`${dataStoreName}`, btoa(JSON.stringify({
             [name]: slideIndex,
-        }));
+        })));
         
     }, [slideIndex, name]);
 
