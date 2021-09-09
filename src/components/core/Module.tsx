@@ -27,8 +27,8 @@ export const Module = ({
     slides,
     index = 0,
     onComplete,
-    onNextSlide = () => { },
-    onFinalSlide = () => { },
+    onNextSlide = () => {},
+    onFinalSlide = () => {},
     defaultHeader,
     defaultFooter,
     data,
@@ -39,7 +39,7 @@ export const Module = ({
         console.debug('Development mode enabled!');
 
         // check if dev cookie
-        let cookieData: any = Cookies.get(`bfg_dev`);
+        let cookieData: any = Cookies.get(`rbe_dev`);
         if (cookieData) {
             cookieData = JSON.parse(cookieData);
         }
@@ -62,10 +62,10 @@ export const Module = ({
     useEffect(() => {
         if (process.env.NODE_ENV === 'development') {
             Cookies.set(`bfg_dev`, {
-                [name]: slideIndex
-            })
+                [name]: slideIndex,
+            });
         }
-    }, [slideIndex]);
+    }, [slideIndex, name]);
 
     const renderSlide = (index: number): JSX.Element => {
         if (typeof slides[index] === 'undefined') {
@@ -94,7 +94,7 @@ export const Module = ({
     };
 
     const nextSlide = () => {
-        onNextSlide(slideIndex + 1)
+        onNextSlide(slideIndex + 1);
         setSlideIndex(slideIndex + 1);
     };
 
@@ -108,7 +108,6 @@ export const Module = ({
 
     const keyboardShortcuts = () => {
         if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_DEBUG === 'true') {
-
             return (
                 <KeyboardEventHandler
                     handleKeys={['left', 'right']}

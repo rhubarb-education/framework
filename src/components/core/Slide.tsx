@@ -6,7 +6,6 @@ import Footer from './template/Footer';
 import Header from './template/Header';
 import Navbar from './template/Navbar';
 
-
 export interface ISlide<DataType = {}> {
     nextSlide(): void;
     previousSlide(): void;
@@ -25,7 +24,7 @@ interface SlideProps {
     animDisabled?: boolean;
     overflow?: boolean;
     children: React.ReactNode;
-    headerHidden?: boolean
+    headerHidden?: boolean;
     headerBasicBG?: string;
     footerHidden?: boolean;
     footerFixed?: boolean;
@@ -33,7 +32,7 @@ interface SlideProps {
 }
 
 export const Slide = ({
-    header = (<Navbar />),
+    header = <Navbar />,
     children,
     footer,
     backgroundColor = 'transparent',
@@ -43,14 +42,23 @@ export const Slide = ({
     overflow = true,
     footerFixed = true,
     footerBasicBG,
-    headerBasicBG
+    headerBasicBG,
 }: SlideProps) => {
     return (
         <AnimatePresence>
             <StyledSlide backgroundColor={backgroundColor} oflow={overflow}>
                 {!headerHidden ? <Header headerBasicBG={headerBasicBG} header={header} /> : null}
-                <Content bottomPadding={footerFixed} backgroundColor={backgroundColor} oflow={overflow} animDisabled={animDisabled}>{children}</Content>
-                {!footerHidden ? <Footer footerBasicBG={footerBasicBG} footer={footer} footerFixed={footerFixed} /> : null}
+                <Content
+                    bottomPadding={footerFixed}
+                    backgroundColor={backgroundColor}
+                    oflow={overflow}
+                    animDisabled={animDisabled}
+                >
+                    {children}
+                </Content>
+                {!footerHidden ? (
+                    <Footer footerBasicBG={footerBasicBG} footer={footer} footerFixed={footerFixed} />
+                ) : null}
             </StyledSlide>
         </AnimatePresence>
     );

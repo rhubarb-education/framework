@@ -8,10 +8,10 @@ const variants: Variants = {
 };
 
 interface IContent {
-    animDisabled: boolean,
-    oflow: boolean,
-    backgroundColor: string,
-    bottomPadding: boolean
+    animDisabled: boolean;
+    oflow: boolean;
+    backgroundColor: string;
+    bottomPadding: boolean;
 }
 
 const Content: React.FC<IContent> = ({ children, animDisabled = false, oflow, backgroundColor, bottomPadding }) => (
@@ -29,16 +29,18 @@ const Content: React.FC<IContent> = ({ children, animDisabled = false, oflow, ba
 );
 
 interface IStyledContent {
-    backgroundColor: string, oflow: boolean, bottomPadding: boolean
+    backgroundColor: string;
+    oflow: boolean;
+    bottomPadding: boolean;
 }
 
-const StyledContent = styled(motion.section) <IStyledContent>`
-    background-color: ${(props) => props.backgroundColor};
-    overflow: ${(props) => (props.oflow ? 'visible' : 'hidden')};
+const StyledContent = styled(motion.section)<IStyledContent>`
+    background-color: ${props => props.backgroundColor};
+    overflow: ${props => (props.oflow ? 'visible' : 'hidden')};
     position: relative;
     z-index: 2;
     flex: 1;
-    ${(props) => (props.bottomPadding ? 'padding-bottom: 75px;' : null)};
-`
+    ${props => (props.bottomPadding ? 'padding-bottom: 75px;' : null)};
+`;
 
 export default Content;
