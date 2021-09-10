@@ -24,11 +24,6 @@
     "peerDependencies": {
         "react": ">=16"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "tsdx lint"
-        }
-    },
     "prettier": {
       "semi": true,
       "trailingComma": "all",
