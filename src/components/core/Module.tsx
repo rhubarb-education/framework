@@ -36,7 +36,7 @@ export const Module = ({
     data,
     devIndex = 0,
     Wrapper = DefaultWrapper,
-    dataStoreName = 'rbe'
+    dataStoreName = 'rbe',
 }: ModuleProps) => {
     const [slideIndex, setSlideIndex] = useState(index);
 
@@ -44,10 +44,9 @@ export const Module = ({
         if (process.env.NODE_ENV !== 'development') {
             return;
         }
-        
+
         console.debug('Development mode enabled!');
 
-        
         let cookieData: any = localStorage.getItem(`${dataStoreName}`);
         if (cookieData) {
             cookieData = JSON.parse(atob(cookieData));
@@ -66,21 +65,25 @@ export const Module = ({
         if (process.env.NODE_ENV !== 'development') {
             return;
         }
-        
-        localStorage.setItem(`${dataStoreName}`, btoa(JSON.stringify({
-            [name]: slideIndex,
-        })));
-        
+
+        localStorage.setItem(
+            `${dataStoreName}`,
+            btoa(
+                JSON.stringify({
+                    [name]: slideIndex,
+                }),
+            ),
+        );
     }, [slideIndex, name]);
 
     const nextSlide = () => {
-        onSlideChange(slideIndex + 1)
+        onSlideChange(slideIndex + 1);
         onNextSlide(slideIndex + 1);
         setSlideIndex(slideIndex + 1);
     };
 
     const previousSlide = () => {
-        onSlideChange(slideIndex - 1)
+        onSlideChange(slideIndex - 1);
         setSlideIndex(slideIndex - 1);
     };
 
