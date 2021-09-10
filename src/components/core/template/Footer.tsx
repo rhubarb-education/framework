@@ -25,7 +25,7 @@ const Footer: React.FC<IFooter> = ({ footer, footerFixed, footerBasicBG }) => {
 };
 
 const StyledFooter = styled.section<{ footerFixed: boolean; background?: string }>`
-    ${props =>
+    ${(props) =>
         props.background
             ? `
             background-color: ${props.background};
@@ -36,7 +36,7 @@ const StyledFooter = styled.section<{ footerFixed: boolean; background?: string 
             }
         `
             : null}
-    ${props =>
+    ${(props) =>
         props.footerFixed
             ? `
             position: fixed; bottom: 0; left: 0; right: 0; height: 50px;

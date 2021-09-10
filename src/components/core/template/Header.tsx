@@ -27,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ header, headerBasicBG }) => {
 export default Header;
 
 const StyledHeader = styled.section<{ background?: string }>`
-    ${props =>
+    ${(props) =>
         props.background
             ? `background-color: ${props.background};
         min-height: 50px;

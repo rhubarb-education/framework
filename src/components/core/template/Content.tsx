@@ -35,12 +35,12 @@ interface IStyledContent {
 }
 
 const StyledContent = styled(motion.section)<IStyledContent>`
-    background-color: ${props => props.backgroundColor};
-    overflow: ${props => (props.oflow ? 'visible' : 'hidden')};
+    background-color: ${(props) => props.backgroundColor};
+    overflow: ${(props) => (props.oflow ? 'visible' : 'hidden')};
     position: relative;
     z-index: 2;
     flex: 1;
-    ${props => (props.bottomPadding ? 'padding-bottom: 75px;' : null)};
+    ${(props) => (props.bottomPadding ? 'padding-bottom: 75px;' : null)};
 `;
 
 export default Content;

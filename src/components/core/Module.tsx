@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 // import VoiceoverContext from '../misc/voiceover-context';
@@ -13,6 +12,7 @@ interface ModuleProps {
     slides: any[];
     index?: number;
     onComplete: (name: any) => void;
+    onSlideChange?: (slideIndex: number) => void;
     onNextSlide?: (slideIndex: number) => void;
     onFinalSlide?: () => void;
     defaultHeader: JSX.Element;
@@ -20,6 +20,7 @@ interface ModuleProps {
     data: object;
     devIndex?: number;
     Wrapper?: React.FC;
+    dataStoreName?: string;
 }
 
 export const Module = ({
@@ -27,6 +28,7 @@ export const Module = ({
     slides,
     index = 0,
     onComplete,
+    onSlideChange = () => {},
     onNextSlide = () => {},
     onFinalSlide = () => {},
     defaultHeader,
@@ -34,14 +36,20 @@ export const Module = ({
     data,
     devIndex = 0,
     Wrapper = DefaultWrapper,
+    dataStoreName = 'rbe',
 }: ModuleProps) => {
-    if (process.env.NODE_ENV === 'development') {
+    const [slideIndex, setSlideIndex] = useState(index);
+
+    useEffect(() => {
+        if (process.env.NODE_ENV !== 'development') {
+            return;
+        }
+
         console.debug('Development mode enabled!');
 
-        // check if dev cookie
-        let cookieData: any = Cookies.get(`rbe_dev`);
+        let cookieData: any = localStorage.getItem(`${dataStoreName}`);
         if (cookieData) {
-            cookieData = JSON.parse(cookieData);
+            cookieData = JSON.parse(atob(cookieData));
         }
 
         if (cookieData && cookieData[name]) {
@@ -49,23 +57,61 @@ export const Module = ({
         } else {
             index = devIndex;
         }
-    }
-    const [slideIndex, setSlideIndex] = useState(index);
 
-    // const { voiceover } = useContext(VoiceoverContext);
+        setSlideIndex(index);
+    }, [setSlideIndex]);
 
-    // useEffect(() => {
-    //     voiceover?.stop();
-    // }, [slideIndex]);
-
-    // also handle slide pos saving...
     useEffect(() => {
-        if (process.env.NODE_ENV === 'development') {
-            Cookies.set(`bfg_dev`, {
-                [name]: slideIndex,
-            });
+        if (process.env.NODE_ENV !== 'development') {
+            return;
         }
+
+        localStorage.setItem(
+            `${dataStoreName}`,
+            btoa(
+                JSON.stringify({
+                    [name]: slideIndex,
+                }),
+            ),
+        );
     }, [slideIndex, name]);
+
+    const nextSlide = () => {
+        onSlideChange(slideIndex + 1);
+        onNextSlide(slideIndex + 1);
+        setSlideIndex(slideIndex + 1);
+    };
+
+    const previousSlide = () => {
+        onSlideChange(slideIndex - 1);
+        setSlideIndex(slideIndex - 1);
+    };
+
+    const gotoSlide = (targetIndex: number) => {
+        onSlideChange(targetIndex);
+        setSlideIndex(targetIndex);
+    };
+
+    const keyboardShortcuts = () => {
+        if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_DEBUG === 'true') {
+            return (
+                <KeyboardEventHandler
+                    handleKeys={['left', 'right']}
+                    handleFocusableElements={true}
+                    onKeyEvent={(key: any) => {
+                        if (key === 'left') {
+                            console.debug(slideIndex);
+                            previousSlide();
+                        } else if (key === 'right') {
+                            console.debug(slideIndex);
+                            nextSlide();
+                        }
+                    }}
+                />
+            );
+        }
+        return null;
+    };
 
     const renderSlide = (index: number): JSX.Element => {
         if (typeof slides[index] === 'undefined') {
@@ -91,40 +137,6 @@ export const Module = ({
                 />
             </Wrapper>
         );
-    };
-
-    const nextSlide = () => {
-        onNextSlide(slideIndex + 1);
-        setSlideIndex(slideIndex + 1);
-    };
-
-    const previousSlide = () => {
-        setSlideIndex(slideIndex - 1);
-    };
-
-    const gotoSlide = (targetIndex: number) => {
-        setSlideIndex(targetIndex);
-    };
-
-    const keyboardShortcuts = () => {
-        if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_DEBUG === 'true') {
-            return (
-                <KeyboardEventHandler
-                    handleKeys={['left', 'right']}
-                    handleFocusableElements={true}
-                    onKeyEvent={(key: any) => {
-                        if (key === 'left') {
-                            console.debug(slideIndex);
-                            previousSlide();
-                        } else if (key === 'right') {
-                            console.debug(slideIndex);
-                            nextSlide();
-                        }
-                    }}
-                />
-            );
-        }
-        return null;
     };
 
     return slides ? (

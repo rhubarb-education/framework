@@ -24,11 +24,6 @@
     "peerDependencies": {
         "react": ">=16"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "tsdx lint"
-        }
-    },
     "prettier": {
       "semi": true,
       "trailingComma": "all",
@@ -73,15 +68,10 @@
     },
     "dependencies": {
         "@types/react-keyboard-event-handler": "^1.5.0",
-        "axios": "^0.21.1",
         "bootstrap": "^5.0.2",
         "framer-motion": "^1.11.0",
-        "js-cookie": "^2.2.1",
-        "node-sass": "^6.0.1",
         "react-bootstrap": "^1.6.1",
         "react-keyboard-event-handler": "^1.5.4",
-        "rollup-plugin-postcss": "^4.0.0",
-        "sass-loader": "^10",
         "styled-components": "^5.3.0"
     }
 }
