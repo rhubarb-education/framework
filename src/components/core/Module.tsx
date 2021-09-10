@@ -12,6 +12,7 @@ interface ModuleProps {
     slides: any[];
     index?: number;
     onComplete: (name: any) => void;
+    onSlideChange?: (slideIndex: number) => void;
     onNextSlide?: (slideIndex: number) => void;
     onFinalSlide?: () => void;
     defaultHeader: JSX.Element;
@@ -27,6 +28,7 @@ export const Module = ({
     slides,
     index = 0,
     onComplete,
+    onSlideChange = () => {},
     onNextSlide = () => {},
     onFinalSlide = () => {},
     defaultHeader,
@@ -72,15 +74,18 @@ export const Module = ({
     }, [slideIndex, name]);
 
     const nextSlide = () => {
+        onSlideChange(slideIndex + 1)
         onNextSlide(slideIndex + 1);
         setSlideIndex(slideIndex + 1);
     };
 
     const previousSlide = () => {
+        onSlideChange(slideIndex - 1)
         setSlideIndex(slideIndex - 1);
     };
 
     const gotoSlide = (targetIndex: number) => {
+        onSlideChange(targetIndex);
         setSlideIndex(targetIndex);
     };
 
