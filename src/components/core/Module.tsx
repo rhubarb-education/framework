@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
-// import VoiceoverContext from '../misc/voiceover-context';
+import { useVoiceoverContext } from '../..';
 import DefaultWrapper from './template/Wrapper';
 
 export interface IModule {
@@ -75,6 +75,14 @@ export const Module = ({
             ),
         );
     }, [slideIndex, name]);
+
+
+    const { voiceover } = useVoiceoverContext();
+
+    useEffect(() => {
+        voiceover?.stop();
+    }, [slideIndex]);
+
 
     const nextSlide = () => {
         onSlideChange(slideIndex + 1);
