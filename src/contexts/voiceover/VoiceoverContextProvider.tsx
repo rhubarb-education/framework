@@ -8,7 +8,7 @@ type VoiceoverContextProviderProps = {
 
 export const VoiceoverContextProvider = ({ children }: VoiceoverContextProviderProps ) => {
     const [voiceover, setVoiceover] = useState<Howl | undefined>();
-    const [voiceoverMuted] = useState(false);
+    const [muted, setMuted] = useState(false);
     const [currentVoiceover, setCurrentVoiceover] = useState<number | undefined>();
 
     const playVoiceover = (spriteName: string) => {
@@ -17,7 +17,7 @@ export const VoiceoverContextProvider = ({ children }: VoiceoverContextProviderP
 
             stopVoiceover();
 
-            if (voiceoverMuted !== undefined && !voiceoverMuted) {
+            if (muted !== undefined && !muted) {
                 console.debug(`Playing VO "${spriteName}".`)
                 vo = voiceover.play(spriteName);
                 setCurrentVoiceover(vo);
@@ -38,6 +38,8 @@ export const VoiceoverContextProvider = ({ children }: VoiceoverContextProviderP
         setVoiceover,
         playVoiceover,
         stopVoiceover,
+        muted,
+        setMuted
     }
     
     return (

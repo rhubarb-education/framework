@@ -6,12 +6,16 @@ export type VoiceoverContextData = {
     setVoiceover: Dispatch<SetStateAction<Howl | undefined>> | undefined;
     playVoiceover: (spriteName: string) => void;
     stopVoiceover: () => void;
+    muted: boolean;
+    setMuted: (status: boolean) => void;
 }
 
 export const VoiceoverContext = createContext<VoiceoverContextData>({
     voiceover: undefined,
     setVoiceover: undefined,
     playVoiceover: () => {},
-    stopVoiceover: () => {}
+    stopVoiceover: () => {},
+    muted: false,
+    setMuted: () => {}
 })
 
