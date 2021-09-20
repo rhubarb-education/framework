@@ -18,9 +18,12 @@ export const VoiceoverContextProvider = ({ children }: VoiceoverContextProviderP
             stopVoiceover();
 
             if (voiceoverMuted !== undefined && !voiceoverMuted) {
+                console.debug(`Playing VO "${spriteName}".`)
                 vo = voiceover.play(spriteName);
                 setCurrentVoiceover(vo);
             }
+        } else {
+            console.debug(`VO playback skipped. Please check the VO is initialised and a valid sprite name provided.`)
         }
     }
 
