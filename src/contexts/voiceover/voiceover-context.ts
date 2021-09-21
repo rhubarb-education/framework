@@ -8,7 +8,7 @@ export type VoiceoverContextData = {
     stopVoiceover: () => void;
     muted: boolean;
     setMuted: (status: boolean) => void;
-}
+};
 
 export const VoiceoverContext = createContext<VoiceoverContextData>({
     voiceover: undefined,
@@ -16,6 +16,5 @@ export const VoiceoverContext = createContext<VoiceoverContextData>({
     playVoiceover: () => {},
     stopVoiceover: () => {},
     muted: false,
-    setMuted: () => {}
-})
-
+    setMuted: () => {},
+});

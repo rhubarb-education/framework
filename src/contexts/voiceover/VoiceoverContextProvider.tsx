@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { VoiceoverContext, VoiceoverContextData } from './voiceover-context';
 
 type VoiceoverContextProviderProps = {
-    children: JSX.Element | string
-}
+    children: JSX.Element | string;
+};
 
-export const VoiceoverContextProvider = ({ children }: VoiceoverContextProviderProps ) => {
+export const VoiceoverContextProvider = ({ children }: VoiceoverContextProviderProps) => {
     const [voiceover, setVoiceover] = useState<Howl | undefined>();
     const [muted, setMuted] = useState(false);
     const [currentVoiceover, setCurrentVoiceover] = useState<number | undefined>();
@@ -18,20 +18,20 @@ export const VoiceoverContextProvider = ({ children }: VoiceoverContextProviderP
             stopVoiceover();
 
             if (muted !== undefined && !muted) {
-                console.debug(`Playing VO "${spriteName}".`)
+                console.debug(`Playing VO "${spriteName}".`);
                 vo = voiceover.play(spriteName);
                 setCurrentVoiceover(vo);
             }
         } else {
-            console.debug(`VO playback skipped. Please check the VO is initialised and a valid sprite name provided.`)
+            console.debug(`VO playback skipped. Please check the VO is initialised and a valid sprite name provided.`);
         }
-    }
+    };
 
     const stopVoiceover = () => {
         if (voiceover && currentVoiceover) {
             voiceover.stop(currentVoiceover);
         }
-    }
+    };
 
     useEffect(() => {
         if (muted) {
@@ -47,12 +47,8 @@ export const VoiceoverContextProvider = ({ children }: VoiceoverContextProviderP
         playVoiceover,
         stopVoiceover,
         muted,
-        setMuted
-    }
-    
-    return (
-        <VoiceoverContext.Provider value={value}>
-            {children}
-        </VoiceoverContext.Provider>
-    );
-}
+        setMuted,
+    };
+
+    return <VoiceoverContext.Provider value={value}>{children}</VoiceoverContext.Provider>;
+};

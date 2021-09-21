@@ -42,7 +42,6 @@ export const Module = ({
     const { voiceover, muted, setMuted } = useVoiceoverContext();
 
     useEffect(() => {
-
         if (process.env.NODE_ENV !== 'development') {
             return;
         }
@@ -56,10 +55,10 @@ export const Module = ({
 
         if (cookieData && cookieData[name]) {
             index = parseInt(cookieData[name].index ?? 0);
-            setMuted(cookieData[name].muted ?? true)
+            setMuted(cookieData[name].muted ?? true);
         } else {
             index = devIndex;
-            setMuted(true);   
+            setMuted(true);
         }
 
         setSlideIndex(index);
@@ -87,7 +86,6 @@ export const Module = ({
         onSlideChange(slideIndex);
         voiceover?.stop();
     }, [slideIndex, onSlideChange]);
-
 
     const nextSlide = () => {
         onNextSlide(slideIndex + 1);
@@ -151,7 +149,6 @@ export const Module = ({
 
     return slides ? (
         <React.Fragment>
-            {/* <Prompt when={slideIndex !== slides.length - 1} message="Are you sure you want to leave this module?" /> */}
             {keyboardShortcuts()}
 
             {renderSlide(slideIndex)}

@@ -4,5 +4,3 @@ export { ISlide, Slide } from './components/core/Slide';
 export { Navbar } from './components/core/template/Navbar';
 export { useVoiceoverContext } from './contexts/voiceover/useVoiceoverContext';
 export { VoiceoverContextProvider } from './contexts/voiceover/VoiceoverContextProvider';
-
-
