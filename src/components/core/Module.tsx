@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
-import { useVoiceoverContext } from '../..';
+import { useVoiceoverContext } from '../../contexts/voiceover/useVoiceoverContext';
 import DefaultWrapper from './template/Wrapper';
 
 export interface IModule {
