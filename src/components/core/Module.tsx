@@ -42,6 +42,7 @@ export const Module = ({
     const { voiceover, muted, setMuted } = useVoiceoverContext();
 
     useEffect(() => {
+
         if (process.env.NODE_ENV !== 'development') {
             return;
         }
@@ -83,23 +84,21 @@ export const Module = ({
     }, [slideIndex, name, muted]);
 
     useEffect(() => {
+        onSlideChange(slideIndex);
         voiceover?.stop();
-    }, [slideIndex]);
+    }, [slideIndex, onSlideChange]);
 
 
     const nextSlide = () => {
-        onSlideChange(slideIndex + 1);
         onNextSlide(slideIndex + 1);
         setSlideIndex(slideIndex + 1);
     };
 
     const previousSlide = () => {
-        onSlideChange(slideIndex - 1);
         setSlideIndex(slideIndex - 1);
     };
 
     const gotoSlide = (targetIndex: number) => {
-        onSlideChange(targetIndex);
         setSlideIndex(targetIndex);
     };
 
