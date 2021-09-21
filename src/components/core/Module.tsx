@@ -39,6 +39,7 @@ export const Module = ({
     dataStoreName = 'rbe',
 }: ModuleProps) => {
     const [slideIndex, setSlideIndex] = useState(index);
+    const { voiceover, muted, setMuted } = useVoiceoverContext();
 
     useEffect(() => {
         if (process.env.NODE_ENV !== 'development') {
@@ -53,9 +54,11 @@ export const Module = ({
         }
 
         if (cookieData && cookieData[name]) {
-            index = parseInt(cookieData[name]);
+            index = parseInt(cookieData[name].index ?? 0);
+            setMuted(cookieData[name].muted ?? true)
         } else {
             index = devIndex;
+            setMuted(true);   
         }
 
         setSlideIndex(index);
@@ -70,14 +73,14 @@ export const Module = ({
             `${dataStoreName}`,
             btoa(
                 JSON.stringify({
-                    [name]: slideIndex,
+                    [name]: {
+                        index: slideIndex,
+                        muted: muted,
+                    },
                 }),
             ),
         );
-    }, [slideIndex, name]);
-
-
-    const { voiceover } = useVoiceoverContext();
+    }, [slideIndex, name, muted]);
 
     useEffect(() => {
         voiceover?.stop();
