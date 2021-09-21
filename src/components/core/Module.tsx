@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
-// import VoiceoverContext from '../misc/voiceover-context';
+import { useVoiceoverContext } from '../../contexts/voiceover/useVoiceoverContext';
 import DefaultWrapper from './template/Wrapper';
 
 export interface IModule {
@@ -39,6 +39,7 @@ export const Module = ({
     dataStoreName = 'rbe',
 }: ModuleProps) => {
     const [slideIndex, setSlideIndex] = useState(index);
+    const { voiceover, muted, setMuted } = useVoiceoverContext();
 
     useEffect(() => {
         if (process.env.NODE_ENV !== 'development') {
@@ -53,9 +54,11 @@ export const Module = ({
         }
 
         if (cookieData && cookieData[name]) {
-            index = parseInt(cookieData[name]);
+            index = parseInt(cookieData[name].index ?? 0);
+            setMuted(cookieData[name].muted ?? true);
         } else {
             index = devIndex;
+            setMuted(true);
         }
 
         setSlideIndex(index);
@@ -70,25 +73,30 @@ export const Module = ({
             `${dataStoreName}`,
             btoa(
                 JSON.stringify({
-                    [name]: slideIndex,
+                    [name]: {
+                        index: slideIndex,
+                        muted: muted,
+                    },
                 }),
             ),
         );
-    }, [slideIndex, name]);
+    }, [slideIndex, name, muted]);
+
+    useEffect(() => {
+        onSlideChange(slideIndex);
+        voiceover?.stop();
+    }, [slideIndex, onSlideChange]);
 
     const nextSlide = () => {
-        onSlideChange(slideIndex + 1);
         onNextSlide(slideIndex + 1);
         setSlideIndex(slideIndex + 1);
     };
 
     const previousSlide = () => {
-        onSlideChange(slideIndex - 1);
         setSlideIndex(slideIndex - 1);
     };
 
     const gotoSlide = (targetIndex: number) => {
-        onSlideChange(targetIndex);
         setSlideIndex(targetIndex);
     };
 
@@ -141,7 +149,6 @@ export const Module = ({
 
     return slides ? (
         <React.Fragment>
-            {/* <Prompt when={slideIndex !== slides.length - 1} message="Are you sure you want to leave this module?" /> */}
             {keyboardShortcuts()}
 
             {renderSlide(slideIndex)}
