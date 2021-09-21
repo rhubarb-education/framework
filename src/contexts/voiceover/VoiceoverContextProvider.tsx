@@ -1,5 +1,5 @@
 import { Howl } from 'howler';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { VoiceoverContext, VoiceoverContextData } from './voiceover-context';
 
 type VoiceoverContextProviderProps = {
@@ -32,6 +32,14 @@ export const VoiceoverContextProvider = ({ children }: VoiceoverContextProviderP
             voiceover.stop(currentVoiceover);
         }
     }
+
+    useEffect(() => {
+        if (muted) {
+            voiceover?.mute(true);
+        } else {
+            voiceover?.mute(false);
+        }
+    }, [muted]);
 
     const value: VoiceoverContextData = {
         voiceover,
