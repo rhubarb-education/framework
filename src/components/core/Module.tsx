@@ -39,7 +39,7 @@ export const Module = ({
     dataStoreName = 'rbe',
 }: ModuleProps) => {
     const [slideIndex, setSlideIndex] = useState(index);
-    const { voiceover, muted, setMuted } = useVoiceoverContext();
+    const { muted, setMuted } = useVoiceoverContext();
 
     useEffect(() => {
         if (process.env.NODE_ENV !== 'development') {
@@ -85,7 +85,6 @@ export const Module = ({
     useEffect(() => {
         console.debug('Change slide event', slideIndex)
         onSlideChange(slideIndex);
-        voiceover?.stop();
     }, [slideIndex, onSlideChange]);
 
     const nextSlide = () => {
