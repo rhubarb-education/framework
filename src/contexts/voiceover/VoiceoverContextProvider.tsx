@@ -28,9 +28,12 @@ export const VoiceoverContextProvider = ({ children }: VoiceoverContextProviderP
     };
 
     const stopVoiceover = () => {
-        if (voiceover && currentVoiceover) {
+        if (voiceover && voiceover.playing(currentVoiceover)) {
             console.debug(`Stopping VO "${currentVoiceover}".`)
             voiceover.stop(currentVoiceover);
+        } else if (voiceover) {
+            console.debug(`Stopping VO playback.`)
+            voiceover.stop();
         }
     };
 

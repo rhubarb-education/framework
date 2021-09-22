@@ -83,6 +83,7 @@ export const Module = ({
     }, [slideIndex, name, muted]);
 
     useEffect(() => {
+        console.debug('Change slide event', slideIndex)
         onSlideChange(slideIndex);
         voiceover?.stop();
     }, [slideIndex, onSlideChange]);
