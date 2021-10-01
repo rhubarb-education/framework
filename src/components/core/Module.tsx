@@ -21,6 +21,7 @@ interface ModuleProps {
     devIndex?: number;
     Wrapper?: React.FC;
     dataStoreName?: string;
+    dataStoreEnabled?: boolean;
 }
 
 export const Module = ({
@@ -37,16 +38,17 @@ export const Module = ({
     devIndex = 0,
     Wrapper = DefaultWrapper,
     dataStoreName = 'rbe',
+    dataStoreEnabled = false,
 }: ModuleProps) => {
     const [slideIndex, setSlideIndex] = useState(index);
     const { muted, setMuted } = useVoiceoverContext();
 
     useEffect(() => {
-        if (process.env.NODE_ENV !== 'development') {
+        if (process.env.NODE_ENV !== 'development' && dataStoreEnabled === false) {
             return;
         }
 
-        console.debug('Development mode enabled!');
+        console.debug('Framework initialised');
 
         let cookieData: any = localStorage.getItem(`${dataStoreName}`);
         if (cookieData) {
@@ -65,7 +67,7 @@ export const Module = ({
     }, [setSlideIndex]);
 
     useEffect(() => {
-        if (process.env.NODE_ENV !== 'development') {
+        if (process.env.NODE_ENV !== 'development' && dataStoreEnabled === false) {
             return;
         }
 
