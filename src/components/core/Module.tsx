@@ -85,7 +85,7 @@ export const Module = ({
     }, [slideIndex, name, muted]);
 
     useEffect(() => {
-        console.debug('Change slide event', slideIndex)
+        process.env.NODE_ENV !== 'development' && console.debug('Change slide event', slideIndex);
         onSlideChange(slideIndex);
     }, [slideIndex, onSlideChange]);
 
