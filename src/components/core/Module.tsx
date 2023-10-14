@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import KeyboardEventHandler from 'react-keyboard-event-handler';
 import { useVoiceoverContext } from '../../contexts/voiceover/useVoiceoverContext';
 import DefaultWrapper from './template/Wrapper';
 
@@ -102,29 +101,6 @@ export const Module = ({
         setSlideIndex(targetIndex);
     };
 
-    const keyboardShortcuts = () => {
-        if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_DEBUG === 'true') {
-            if (typeof window !== 'undefined') {
-                return (
-                    <KeyboardEventHandler
-                        handleKeys={['left', 'right']}
-                        handleFocusableElements={true}
-                        onKeyEvent={(key: any) => {
-                            if (key === 'left') {
-                                console.debug(slideIndex);
-                                previousSlide();
-                            } else if (key === 'right') {
-                                console.debug(slideIndex);
-                                nextSlide();
-                            }
-                        }}
-                    />
-                );
-            }
-        }
-        return null;
-    };
-
     const renderSlide = (index: number): JSX.Element => {
         if (typeof slides[index] === 'undefined') {
             return <p onKeyDown={() => console.log('go')}>Error rendering slide (404)</p>;
@@ -153,8 +129,6 @@ export const Module = ({
 
     return slides ? (
         <React.Fragment>
-            {keyboardShortcuts()}
-
             {renderSlide(slideIndex)}
         </React.Fragment>
     ) : (
