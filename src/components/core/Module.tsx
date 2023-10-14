@@ -104,21 +104,23 @@ export const Module = ({
 
     const keyboardShortcuts = () => {
         if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_DEBUG === 'true') {
-            return (
-                <KeyboardEventHandler
-                    handleKeys={['left', 'right']}
-                    handleFocusableElements={true}
-                    onKeyEvent={(key: any) => {
-                        if (key === 'left') {
-                            console.debug(slideIndex);
-                            previousSlide();
-                        } else if (key === 'right') {
-                            console.debug(slideIndex);
-                            nextSlide();
-                        }
-                    }}
-                />
-            );
+            if (typeof window !== 'undefined') {
+                return (
+                    <KeyboardEventHandler
+                        handleKeys={['left', 'right']}
+                        handleFocusableElements={true}
+                        onKeyEvent={(key: any) => {
+                            if (key === 'left') {
+                                console.debug(slideIndex);
+                                previousSlide();
+                            } else if (key === 'right') {
+                                console.debug(slideIndex);
+                                nextSlide();
+                            }
+                        }}
+                    />
+                );
+            }
         }
         return null;
     };
