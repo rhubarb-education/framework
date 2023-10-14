@@ -28,8 +28,12 @@ export const VoiceoverContextProvider = ({ children }: VoiceoverContextProviderP
     };
 
     const stopVoiceover = () => {
-        if (voiceover && currentVoiceover) {
+        if (voiceover && voiceover.playing(currentVoiceover)) {
+            process.env.NODE_ENV !== 'development' && console.debug(`Stopping VO "${currentVoiceover}".`);
             voiceover.stop(currentVoiceover);
+        } else if (voiceover) {
+            process.env.NODE_ENV !== 'development' && console.debug(`Stopping VO playback.`);
+            voiceover.stop();
         }
     };
 

@@ -21,6 +21,7 @@ interface ModuleProps {
     devIndex?: number;
     Wrapper?: React.FC;
     dataStoreName?: string;
+    dataStoreEnabled?: boolean;
 }
 
 export const Module = ({
@@ -37,16 +38,17 @@ export const Module = ({
     devIndex = 0,
     Wrapper = DefaultWrapper,
     dataStoreName = 'rbe',
+    dataStoreEnabled = false,
 }: ModuleProps) => {
     const [slideIndex, setSlideIndex] = useState(index);
-    const { voiceover, muted, setMuted } = useVoiceoverContext();
+    const { muted, setMuted } = useVoiceoverContext();
 
     useEffect(() => {
-        if (process.env.NODE_ENV !== 'development') {
+        if (process.env.NODE_ENV !== 'development' && dataStoreEnabled === false) {
             return;
         }
 
-        console.debug('Development mode enabled!');
+        console.debug('Framework initialised');
 
         let cookieData: any = localStorage.getItem(`${dataStoreName}`);
         if (cookieData) {
@@ -65,7 +67,7 @@ export const Module = ({
     }, [setSlideIndex]);
 
     useEffect(() => {
-        if (process.env.NODE_ENV !== 'development') {
+        if (process.env.NODE_ENV !== 'development' && dataStoreEnabled === false) {
             return;
         }
 
@@ -83,8 +85,8 @@ export const Module = ({
     }, [slideIndex, name, muted]);
 
     useEffect(() => {
+        process.env.NODE_ENV !== 'development' && console.debug('Change slide event', slideIndex);
         onSlideChange(slideIndex);
-        voiceover?.stop();
     }, [slideIndex, onSlideChange]);
 
     const nextSlide = () => {
@@ -102,21 +104,23 @@ export const Module = ({
 
     const keyboardShortcuts = () => {
         if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_DEBUG === 'true') {
-            return (
-                <KeyboardEventHandler
-                    handleKeys={['left', 'right']}
-                    handleFocusableElements={true}
-                    onKeyEvent={(key: any) => {
-                        if (key === 'left') {
-                            console.debug(slideIndex);
-                            previousSlide();
-                        } else if (key === 'right') {
-                            console.debug(slideIndex);
-                            nextSlide();
-                        }
-                    }}
-                />
-            );
+            if (typeof window !== 'undefined') {
+                return (
+                    <KeyboardEventHandler
+                        handleKeys={['left', 'right']}
+                        handleFocusableElements={true}
+                        onKeyEvent={(key: any) => {
+                            if (key === 'left') {
+                                console.debug(slideIndex);
+                                previousSlide();
+                            } else if (key === 'right') {
+                                console.debug(slideIndex);
+                                nextSlide();
+                            }
+                        }}
+                    />
+                );
+            }
         }
         return null;
     };
